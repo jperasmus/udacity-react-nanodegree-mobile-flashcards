@@ -1,5 +1,25 @@
 {
   "expo": {
-    "sdkVersion": "23.0.0"
+    "sdkVersion": "23.0.0",
+    "version": "0.0.1",
+    "name": "Mobile Flashcards",
+    "slug": "mobile-flashbards",
+    "description": "React Native Udacity Nanodegree application",
+    "platforms": ["ios", "android"],
+    "githubUrl": "https://github.com/jperasmus/udacity-react-nanodegree-mobile-flashcards",
+    "orientation": "portrait",
+    "primaryColor": "#000000",
+    "icon": "/Users/jp/Projects/learnings/udacity/react-nanodegree/mobile-flashcards/assets/icon-1024x1024.png",
+    "notification": {
+      "icon": "/Users/jp/Projects/learnings/udacity/react-nanodegree/mobile-flashcards/assets/icon-48x48.png",
+      "color": "#000000",
+      "androidMode": "default"
+    },
+    "ios": {
+     "bundleIdentifier": "me.jperasmus.flashcards"
+    },
+    "android": {
+     "package": "me.jperasmus.flashcards"
+    }
   }
 }
