@@ -2,25 +2,39 @@ import * as api from '../utils/api';
 
 export const FETCH_DECKS = 'FETCH_DECKS';
 export const ADD_DECK = 'ADD_DECK';
+export const ADD_CARD = 'ADD_CARD';
 
-export function fetchDecksSuccess(decks) {
-  return {
-    type: FETCH_DECKS,
-    decks
-  };
-}
+export const fetchDecksSuccess = decks => ({
+  type: FETCH_DECKS,
+  decks
+});
 
-export function fetchDecks() {
-  return dispatch => api.getDecks().then(decks => dispatch(fetchDecksSuccess(decks)));
-}
+export const fetchDecks = () => async dispatch => {
+  const decks = await api.getDecks();
+  return dispatch(fetchDecksSuccess(decks));
+};
 
 export const addDeckSuccess = deck => ({
   type: ADD_DECK,
   deck
 });
 
-export function addDeck({ title, description }) {
+export const addDeck = ({ title, description }) => {
   const payload = { title, description, questions: [] };
 
-  return dispatch => api.saveDeckTitle(payload).then(deck => dispatch(addDeckSuccess(deck)));
-}
+  return async dispatch => {
+    const deck = await api.saveDeckTitle(payload);
+    return dispatch(addDeckSuccess(deck));
+  };
+};
+
+export const addCardSuccess = ({ title, card }) => ({
+  type: ADD_CARD,
+  title,
+  card
+});
+
+export const addCard = payload => async dispatch => {
+  await api.addCardToDeck(payload);
+  return dispatch(addCardSuccess(payload));
+};

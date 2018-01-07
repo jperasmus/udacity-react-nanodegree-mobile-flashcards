@@ -8,6 +8,7 @@ import { CenteredContainer } from './styled';
 import isEmpty from '../helpers/is-empty';
 import { white } from '../helpers/colors';
 import { fetchDecks } from '../actions/index';
+import sortByAttr from '../helpers/sort-by-attr';
 
 export const DeckListViewTabBarIcon = ({ tintColor, focused }) => (
   <MaterialCommunityIcons name={focused ? 'cards' : 'cards-outline'} size={26} style={{ color: tintColor }} />
@@ -41,10 +42,12 @@ class DeckListView extends Component {
       );
     }
 
+    const data = sortByAttr('title', Object.values(decks));
+
     return (
       <View style={{ backgroundColor: white, flex: 1 }}>
         <FlatList
-          data={Object.values(decks)}
+          data={data}
           renderItem={item => <DeckListItem onPress={this.navigateToDeck} {...item} />}
           keyExtractor={this.keyExtractor}
         />

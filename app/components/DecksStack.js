@@ -18,7 +18,10 @@ const DecksStack = StackNavigator(
       })
     },
     AddCard: {
-      screen: AddCard
+      screen: AddCard,
+      navigationOptions: () => ({
+        title: 'Add Card'
+      })
     },
     Quiz: {
       screen: Quiz,
