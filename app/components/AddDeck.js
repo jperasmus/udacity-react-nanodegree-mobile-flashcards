@@ -26,7 +26,7 @@ class AddDeck extends Component {
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
     let headerLeft = <Button title="Clear" color={yellow} onPress={params.clear ? params.clear : () => null} />;
-    let headerRight = <Button title="Add" color={yellow} onPress={params.submit ? params.submit : () => null} />;
+    let headerRight = <Button title="Save" color={yellow} onPress={params.submit ? params.submit : () => null} />;
 
     if (params.isClearing) {
       headerLeft = <ActivityIndicator />;
