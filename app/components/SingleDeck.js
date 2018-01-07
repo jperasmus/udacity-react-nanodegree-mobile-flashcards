@@ -13,7 +13,7 @@ class SingleDeck extends Component {
     return (
       <CenteredContainer style={{ backgroundColor: black75 }}>
         <DeckTitle>{title}</DeckTitle>
-        {description && <DeckDescription>{description}</DeckDescription>}
+        {!!description && <DeckDescription>{description}</DeckDescription>}
         <DeckInfo>
           {length} {length === 1 ? 'card' : 'cards'}
         </DeckInfo>
