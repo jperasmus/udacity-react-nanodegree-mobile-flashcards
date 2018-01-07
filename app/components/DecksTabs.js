@@ -1,8 +1,8 @@
-import React from 'react';
+import { Platform } from 'react-native';
 import { TabNavigator } from 'react-navigation';
-import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
-import DeckListView from './DeckListView';
-import AddDeck from './AddDeck';
+import DeckListView, { DeckListViewTabBarIcon } from './DeckListView';
+import AddDeck, { AddDeckTabBarIcon } from './AddDeck';
+import { white, orange, gray, black25 } from '../helpers/colors';
 
 const DecksTabs = TabNavigator(
   {
@@ -10,43 +10,44 @@ const DecksTabs = TabNavigator(
       screen: DeckListView,
       navigationOptions: {
         tabBarLabel: 'Decks',
-        tabBarIcon: ({ tintColor, focused }) => (
-          <MaterialCommunityIcons name={focused ? 'cards' : 'cards-outline'} size={26} style={{ color: tintColor }} />
-        )
+        tabBarIcon: DeckListViewTabBarIcon
       }
     },
     AddDeck: {
       screen: AddDeck,
       navigationOptions: {
         tabBarLabel: 'Add Deck',
-        tabBarIcon: ({ tintColor, focused }) => (
-          <Ionicons
-            name={focused ? 'ios-add-circle' : 'ios-add-circle-outline'}
-            size={26}
-            style={{ color: tintColor }}
-          />
-        )
+        tabBarIcon: AddDeckTabBarIcon
       }
     }
   },
   {
-    navigationOptions: {
-      // header: null
+    swipeEnabled: false,
+    animationEnabled: true,
+    tabBarPosition: Platform.OS === 'ios' ? 'bottom' : 'top',
+    tabBarOptions: {
+      activeTintColor: Platform.OS === 'ios' ? orange : white,
+      activeBackgroundColor: Platform.OS === 'ios' ? white : orange,
+      inactiveTintColor: gray,
+      inactiveBackgroundColor: Platform.OS === 'ios' ? white : orange,
+      showLabel: true,
+      style: {
+        height: 56,
+        marginTop: 6,
+        paddingBottom: 4,
+        shadowColor: black25,
+        shadowOffset: {
+          width: 0,
+          height: 3
+        },
+        shadowRadius: 6,
+        shadowOpacity: 0.9
+      },
+      labelStyle: {
+        fontSize: 12
+      },
+      allowFontScaling: true
     }
-    //   tabBarOptions: {
-    //     activeTintColor: Platform.OS === 'ios' ? purple : white,
-    //     style: {
-    //       height: 56,
-    //       backgroundColor: Platform.OS === 'ios' ? white : purple,
-    //       shadowColor: 'rgba(0,0,0,0.24)',
-    //       shadowOffset: {
-    //         width: 0,
-    //         height: 3
-    //       },
-    //       shadowRadius: 6,
-    //       shadowOpacity: 1
-    //     }
-    //   }
   }
 );
 

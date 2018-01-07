@@ -7,6 +7,10 @@ import isEmpty from '../helpers/is-empty';
 import { CenteredContainer } from './styled';
 import DeckListItem from './DeckListItem';
 
+export const DeckListViewTabBarIcon = ({ tintColor, focused }) => (
+  <MaterialCommunityIcons name={focused ? 'cards' : 'cards-outline'} size={26} style={{ color: tintColor }} />
+);
+
 class DeckListView extends Component {
   static navigationOptions = {
     title: 'Decks'
