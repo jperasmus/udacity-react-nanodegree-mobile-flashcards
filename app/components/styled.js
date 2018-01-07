@@ -5,15 +5,15 @@ export const CenteredContainer = styled.View`
   flex: 1;
   align-items: center;
   justify-content: center;
-  background-color: ${black};
 `;
 
 export const ListItem = styled.TouchableOpacity`
   flex: 1;
   background-color: ${black75};
   margin: 0;
-  align-items: flex-start;
-  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   padding: 15px;
   border-bottom-width: 1px;
   border-bottom-color: ${gray};

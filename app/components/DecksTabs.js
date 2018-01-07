@@ -33,7 +33,6 @@ const DecksTabs = TabNavigator(
       showLabel: true,
       style: {
         height: 56,
-        marginTop: 6,
         paddingBottom: 4,
         shadowColor: black25,
         shadowOffset: {

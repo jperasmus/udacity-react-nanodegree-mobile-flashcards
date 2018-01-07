@@ -7,6 +7,11 @@ export const AddDeckTabBarIcon = ({ tintColor, focused }) => (
   <Ionicons name={focused ? 'ios-add-circle' : 'ios-add-circle-outline'} size={26} style={{ color: tintColor }} />
 );
 
+AddDeckTabBarIcon.propTypes = {
+  tintColor: PropTypes.string.isRequired,
+  focused: PropTypes.bool.isRequired
+};
+
 class AddDeck extends Component {
   static navigationOptions = {
     title: 'Add Deck'

@@ -2,40 +2,46 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import get from 'lodash.get';
-import { CenteredContainer, DeckTitle, DeckInfo, Button, ButtonText } from './styled';
+import { CenteredContainer, DeckTitle, DeckInfo, DeckDescription } from './styled';
+import Button from './Button';
+import { black75 } from '../helpers/colors';
 
 class SingleDeck extends Component {
-  static navigationOptions = ({ navigation }) => {
-    const title = get(navigation, 'state.params.title', '');
+  // static navigationOptions = ({ navigation }) => {
+  //   const title = get(navigation, 'state.params.title', '').concat(' Deck');
 
-    return {
-      title
-    };
-  };
+  //   return {
+  //     title
+  //   };
+  // };
 
   render() {
-    const { title, questions: { length } } = this.props;
+    const { title, description, questions: { length }, navigation } = this.props;
 
     return (
-      <CenteredContainer>
+      <CenteredContainer style={{ backgroundColor: black75 }}>
         <DeckTitle>{title}</DeckTitle>
+        {description && <DeckDescription>{description}</DeckDescription>}
         <DeckInfo>
           {length} {length === 1 ? 'card' : 'cards'}
         </DeckInfo>
-        <Button>
-          <ButtonText>Add Card</ButtonText>
-        </Button>
-        <Button isPrimary>
-          <ButtonText isPrimary>Start Quiz</ButtonText>
-        </Button>
+        <CenteredContainer>
+          <Button title="Add Card" onPress={() => navigation.navigate('AddCard', { title })} />
+          <Button title="Start Quiz" isPrimary onPress={() => navigation.navigate('Quiz', { title })} />
+        </CenteredContainer>
       </CenteredContainer>
     );
   }
 }
 
+SingleDeck.defaultProps = {
+  description: null
+};
+
 SingleDeck.propTypes = {
   navigation: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
+  description: PropTypes.string,
   questions: PropTypes.array.isRequired
 };
 

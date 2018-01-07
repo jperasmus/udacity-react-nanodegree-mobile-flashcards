@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Text, FlatList } from 'react-native';
+import { Text, FlatList, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import isEmpty from '../helpers/is-empty';
-import { CenteredContainer } from './styled';
 import DeckListItem from './DeckListItem';
+import { CenteredContainer } from './styled';
+import isEmpty from '../helpers/is-empty';
+import { white } from '../helpers/colors';
 
 export const DeckListViewTabBarIcon = ({ tintColor, focused }) => (
   <MaterialCommunityIcons name={focused ? 'cards' : 'cards-outline'} size={26} style={{ color: tintColor }} />
 );
+
+DeckListViewTabBarIcon.propTypes = {
+  tintColor: PropTypes.string.isRequired,
+  focused: PropTypes.bool.isRequired
+};
 
 class DeckListView extends Component {
   static navigationOptions = {
@@ -35,11 +41,13 @@ class DeckListView extends Component {
     }
 
     return (
-      <FlatList
-        data={Object.values(decks)}
-        renderItem={item => <DeckListItem onPress={this.navigateToDeck} {...item} />}
-        keyExtractor={this.keyExtractor}
-      />
+      <View style={{ backgroundColor: white, flex: 1 }}>
+        <FlatList
+          data={Object.values(decks)}
+          renderItem={item => <DeckListItem onPress={this.navigateToDeck} {...item} />}
+          keyExtractor={this.keyExtractor}
+        />
+      </View>
     );
   }
 }
