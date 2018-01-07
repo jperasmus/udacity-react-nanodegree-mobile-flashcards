@@ -7,8 +7,16 @@ import isEmpty from '../helpers/is-empty';
 import { CenteredContainer } from './styled';
 import DeckListItem from './DeckListItem';
 
-class Decks extends Component {
-  _keyExtractor = item => item.title;
+class DeckListView extends Component {
+  static navigationOptions = {
+    title: 'Decks'
+  };
+
+  keyExtractor = item => item.title;
+
+  navigateToDeck = title => {
+    this.props.navigation.navigate('Single', { title });
+  };
 
   render() {
     const { decks } = this.props;
@@ -22,18 +30,25 @@ class Decks extends Component {
       );
     }
 
-    return <FlatList data={Object.values(decks)} renderItem={DeckListItem} keyExtractor={this._keyExtractor} />;
+    return (
+      <FlatList
+        data={Object.values(decks)}
+        renderItem={item => <DeckListItem onPress={this.navigateToDeck} {...item} />}
+        keyExtractor={this.keyExtractor}
+      />
+    );
   }
 }
 
-Decks.defaultProps = {
+DeckListView.defaultProps = {
   decks: {}
 };
 
-Decks.propTypes = {
-  decks: PropTypes.object
+DeckListView.propTypes = {
+  decks: PropTypes.object,
+  navigation: PropTypes.object.isRequired
 };
 
 const mapStateToProps = ({ decks }) => ({ decks });
 
-export default connect(mapStateToProps)(Decks);
+export default connect(mapStateToProps)(DeckListView);
