@@ -19,6 +19,7 @@
     "src/**/*.{js}": [
       "prettier --single-quote --write",
       "eslint --fix",
+      "npm run lint:css",
       "git add"
     ]
   },
