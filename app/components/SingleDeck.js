@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import get from 'lodash.get';
-import { CenteredContainer, DeckTitle, DeckInfo, DeckDescription } from './styled';
+import { CenteredContainer, Header, DeckInfo, Paragraph } from './styled';
 import Button from './Button';
 import { black75 } from '../helpers/colors';
 
@@ -12,8 +12,8 @@ class SingleDeck extends Component {
 
     return (
       <CenteredContainer style={{ backgroundColor: black75 }}>
-        <DeckTitle>{title}</DeckTitle>
-        {!!description && <DeckDescription>{description}</DeckDescription>}
+        <Header>{title}</Header>
+        {!!description && <Paragraph>{description}</Paragraph>}
         <DeckInfo>
           {length} {length === 1 ? 'card' : 'cards'}
         </DeckInfo>

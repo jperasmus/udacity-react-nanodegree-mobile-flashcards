@@ -1,5 +1,8 @@
 import * as api from '../utils/api';
 
+/**
+ * DECKS
+ */
 export const FETCH_DECKS = 'FETCH_DECKS';
 export const ADD_DECK = 'ADD_DECK';
 export const ADD_CARD = 'ADD_CARD';
@@ -38,3 +41,18 @@ export const addCard = payload => async dispatch => {
   await api.addCardToDeck(payload);
   return dispatch(addCardSuccess(payload));
 };
+
+/**
+ * QUIZ
+ */
+export const RESET_QUIZ = 'RESET_QUIZ';
+export const ANSWERED_QUESTION = 'ANSWERED_QUESTION';
+
+export const resetQuiz = () => ({
+  type: RESET_QUIZ
+});
+
+export const answeredQuestion = index => ({
+  type: ANSWERED_QUESTION,
+  index
+});

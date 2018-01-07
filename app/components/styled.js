@@ -30,14 +30,14 @@ export const ListItemInfo = styled.Text`
   color: ${white};
 `;
 
-export const DeckTitle = styled.Text`
+export const Header = styled.Text`
   font-size: 36px;
   color: ${white};
   margin-top: 30px;
   margin-bottom: 15px;
 `;
 
-export const DeckDescription = styled.Text`
+export const Paragraph = styled.Text`
   font-size: 16px;
   color: ${white};
   margin-bottom: 15px;
