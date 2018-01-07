@@ -1,5 +1,6 @@
 import { StackNavigator } from 'react-navigation';
 import { Platform } from 'react-native';
+import get from 'lodash.get';
 import DecksTabs from './DecksTabs';
 import SingleDeck from './SingleDeck';
 import AddCard from './AddCard';
@@ -26,7 +27,7 @@ const DecksStack = StackNavigator(
     Quiz: {
       screen: Quiz,
       navigationOptions: ({ navigation }) => ({
-        title: `${navigation.state.params.title} Quiz`
+        title: `${get(navigation, 'state.params.title', '')} Quiz`
       })
     }
   },

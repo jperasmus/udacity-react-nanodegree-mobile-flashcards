@@ -19,7 +19,7 @@ class SingleDeck extends Component {
         </DeckInfo>
         <CenteredContainer>
           <Button title="Add Card" onPress={() => navigation.navigate('AddCard', { title })} />
-          <Button title="Start Quiz" isPrimary onPress={() => navigation.navigate('Quiz', { title })} />
+          {!!length && <Button title="Start Quiz" isPrimary onPress={() => navigation.navigate('Quiz', { title })} />}
         </CenteredContainer>
       </CenteredContainer>
     );
