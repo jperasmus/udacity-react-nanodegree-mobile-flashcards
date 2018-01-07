@@ -5,6 +5,7 @@ export const CenteredContainer = styled.View`
   flex: 1;
   align-items: center;
   justify-content: center;
+  padding: 0 15px;
 `;
 
 export const ListItem = styled.TouchableOpacity`
@@ -37,9 +38,10 @@ export const DeckTitle = styled.Text`
 `;
 
 export const DeckDescription = styled.Text`
-  font-size: 20px;
+  font-size: 16px;
   color: ${white};
   margin-bottom: 15px;
+  text-align: center;
 `;
 
 export const DeckInfo = styled.Text`
@@ -61,4 +63,22 @@ export const StyledButton = styled.TouchableOpacity`
 export const ButtonText = styled.Text`
   font-size: 16px;
   color: ${black};
+`;
+
+export const Input = styled.TextInput`
+  font-size: 16px;
+  color: ${black};
+  width: 100%;
+  margin: 15px;
+  padding: 10px;
+  border-bottom-width: 1;
+  border-color: ${black}
+  text-align: center;
+`;
+
+export const Label = styled.Text`
+  font-size: ${props => (props.big ? '26px' : '16px')};
+  color: ${black};
+  margin: 30px 15px 15px;
+  text-align: center;
 `;

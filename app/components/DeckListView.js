@@ -7,6 +7,7 @@ import DeckListItem from './DeckListItem';
 import { CenteredContainer } from './styled';
 import isEmpty from '../helpers/is-empty';
 import { white } from '../helpers/colors';
+import { fetchDecks } from '../actions/index';
 
 export const DeckListViewTabBarIcon = ({ tintColor, focused }) => (
   <MaterialCommunityIcons name={focused ? 'cards' : 'cards-outline'} size={26} style={{ color: tintColor }} />
@@ -18,6 +19,10 @@ DeckListViewTabBarIcon.propTypes = {
 };
 
 class DeckListView extends Component {
+  componentDidMount() {
+    this.props.getDecks();
+  }
+
   keyExtractor = item => item.title;
 
   navigateToDeck = title => {
@@ -54,9 +59,12 @@ DeckListView.defaultProps = {
 
 DeckListView.propTypes = {
   decks: PropTypes.object,
-  navigation: PropTypes.object.isRequired
+  navigation: PropTypes.object.isRequired,
+  getDecks: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ decks }) => ({ decks });
 
-export default connect(mapStateToProps)(DeckListView);
+const mapDispatchToProps = dispatch => ({ getDecks: () => dispatch(fetchDecks()) });
+
+export default connect(mapStateToProps, mapDispatchToProps)(DeckListView);

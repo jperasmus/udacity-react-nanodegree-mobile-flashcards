@@ -2,7 +2,7 @@ import { Platform } from 'react-native';
 import { TabNavigator } from 'react-navigation';
 import DeckListView, { DeckListViewTabBarIcon } from './DeckListView';
 import AddDeck, { AddDeckTabBarIcon } from './AddDeck';
-import { white, orange, gray, black25 } from '../helpers/colors';
+import { white, orange, gray, black25, yellow } from '../helpers/colors';
 
 const DecksTabs = TabNavigator(
   {

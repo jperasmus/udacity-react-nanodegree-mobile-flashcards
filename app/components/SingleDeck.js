@@ -7,14 +7,6 @@ import Button from './Button';
 import { black75 } from '../helpers/colors';
 
 class SingleDeck extends Component {
-  // static navigationOptions = ({ navigation }) => {
-  //   const title = get(navigation, 'state.params.title', '').concat(' Deck');
-
-  //   return {
-  //     title
-  //   };
-  // };
-
   render() {
     const { title, description, questions: { length }, navigation } = this.props;
 
