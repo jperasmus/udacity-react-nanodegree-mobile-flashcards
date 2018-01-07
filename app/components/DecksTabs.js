@@ -9,6 +9,7 @@ const DecksTabs = TabNavigator(
     Decks: {
       screen: DeckListView,
       navigationOptions: {
+        title: 'Mobile Flashcards',
         tabBarLabel: 'Decks',
         tabBarIcon: DeckListViewTabBarIcon
       }
@@ -16,6 +17,7 @@ const DecksTabs = TabNavigator(
     AddDeck: {
       screen: AddDeck,
       navigationOptions: {
+        title: 'Add Deck',
         tabBarLabel: 'Add Deck',
         tabBarIcon: AddDeckTabBarIcon
       }

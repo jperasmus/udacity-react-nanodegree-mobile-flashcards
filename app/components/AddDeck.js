@@ -13,10 +13,6 @@ AddDeckTabBarIcon.propTypes = {
 };
 
 class AddDeck extends Component {
-  static navigationOptions = {
-    title: 'Add Deck'
-  };
-
   render() {
     return (
       <View>

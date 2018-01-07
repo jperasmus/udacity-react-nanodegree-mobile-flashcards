@@ -32,7 +32,7 @@ const DecksStack = StackNavigator(
     headerMode: Platform.OS === 'ios' ? 'float' : 'screen',
     navigationOptions: () => ({
       headerStyle: {
-        height: 28,
+        height: 30,
         backgroundColor: black
       },
       headerTitleStyle: {

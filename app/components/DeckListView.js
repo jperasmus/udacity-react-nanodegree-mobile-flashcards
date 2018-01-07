@@ -18,10 +18,6 @@ DeckListViewTabBarIcon.propTypes = {
 };
 
 class DeckListView extends Component {
-  static navigationOptions = {
-    title: 'Decks'
-  };
-
   keyExtractor = item => item.title;
 
   navigateToDeck = title => {
