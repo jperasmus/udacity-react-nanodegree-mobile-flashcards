@@ -5,13 +5,13 @@ import Button from './Button';
 
 class QuizResult extends Component {
   render() {
-    const { totalCount, correctCount, onRestart } = this.props;
+    const { total, correct, onRestart } = this.props;
 
     return (
       <CenteredContainer>
         <Header>Results</Header>
         <Paragraph>
-          You had {correctCount} correct out of {totalCount}
+          You had {correct.length} correct out of {total}
         </Paragraph>
         <CenteredContainer>
           <Button title="Restart" isPrimary onPress={onRestart} />
@@ -24,8 +24,8 @@ class QuizResult extends Component {
 QuizResult.defaultProps = {};
 
 QuizResult.propTypes = {
-  totalCount: PropTypes.number.isRequired,
-  correctCount: PropTypes.number.isRequired,
+  total: PropTypes.number.isRequired,
+  correct: PropTypes.array.isRequired,
   onRestart: PropTypes.func.isRequired
 };
 

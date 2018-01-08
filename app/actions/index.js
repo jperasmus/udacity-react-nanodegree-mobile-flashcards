@@ -46,13 +46,22 @@ export const addCard = payload => async dispatch => {
  * QUIZ
  */
 export const RESET_QUIZ = 'RESET_QUIZ';
+export const SHOW_ANSWER = 'SHOW_ANSWER';
 export const ANSWERED_QUESTION = 'ANSWERED_QUESTION';
+export const QUESTION = 'QUESTION';
+export const ANSWER = 'ANSWER';
+export const RESULT = 'RESULT';
 
 export const resetQuiz = () => ({
   type: RESET_QUIZ
 });
 
-export const answeredQuestion = index => ({
+export const showAnswer = () => ({
+  type: SHOW_ANSWER
+});
+
+export const answeredQuestion = ({ index, total }) => ({
   type: ANSWERED_QUESTION,
-  index
+  index,
+  total
 });

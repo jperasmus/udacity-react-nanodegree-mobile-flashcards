@@ -12,8 +12,8 @@ class QuizAnswer extends Component {
         <Header>Answer</Header>
         <Paragraph>{answer}</Paragraph>
         <CenteredContainer>
-          <Button title="Whoops! I failed." onPress={onIncorrect} />
-          <Button title="Yay! I had it right!" isPrimary onPress={onCorrect} />
+          <Button title="Nope" onPress={onIncorrect} />
+          <Button title="Yay!!" isPrimary onPress={onCorrect} />
         </CenteredContainer>
       </CenteredContainer>
     );

@@ -82,3 +82,9 @@ export const Label = styled.Text`
   margin: 30px 15px 15px;
   text-align: center;
 `;
+
+export const QuestionCount = styled.Text`
+  font-size: 14px;
+  padding: 8px;
+  color: ${white};
+`;

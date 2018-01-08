@@ -1,9 +1,10 @@
-import { RESET_QUIZ, ANSWERED_QUESTION } from '../actions';
+import { RESET_QUIZ, ANSWERED_QUESTION, SHOW_ANSWER, QUESTION, ANSWER, RESULT } from '../actions';
 
 const initialState = {
-  title: '',
-  correctCount: 0,
-  answeredCount: 0
+  view: QUESTION,
+  currentQuestionIndex: 0,
+  correct: [],
+  answered: 0
 };
 
 export default function quiz(state = initialState, action) {
@@ -11,14 +12,24 @@ export default function quiz(state = initialState, action) {
     case RESET_QUIZ:
       return { ...initialState };
 
-    case ANSWERED_QUESTION:
+    case SHOW_ANSWER:
+      return { ...state, ...{ view: ANSWER } };
+
+    case ANSWERED_QUESTION: {
+      const { index, total } = action;
+      const newQuestionIndex = state.currentQuestionIndex + 1;
+      const isDone = newQuestionIndex === total;
+
       return {
         ...state,
         ...{
-          answeredCount: state.answeredCount + 1,
-          correctCount: action.index ? state.correctCount + 1 : state.correctCount
+          answered: state.answered + 1,
+          correct: typeof index === 'number' ? state.correct.concat([index]) : state.correct,
+          currentQuestionIndex: newQuestionIndex,
+          view: isDone ? RESULT : QUESTION
         }
       };
+    }
 
     default:
       return state;

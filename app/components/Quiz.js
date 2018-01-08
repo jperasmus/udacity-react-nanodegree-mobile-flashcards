@@ -1,28 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Text, Button, ActivityIndicator } from 'react-native';
+import { Button, ActivityIndicator, Alert } from 'react-native';
 import get from 'lodash.get';
-import { CenteredContainer } from './styled';
-import { black75, yellow } from '../helpers/colors';
-import { resetQuiz, answeredQuestion } from '../actions';
 import QuizQuestion from './QuizQuestion';
 import QuizAnswer from './QuizAnswer';
 import QuizResult from './QuizResult';
+import { CenteredContainer, QuestionCount } from './styled';
+import { black75, yellow } from '../helpers/colors';
+import { resetQuiz, answeredQuestion, showAnswer, QUESTION, ANSWER, RESULT } from '../actions';
 
-const QUESTION = 'QUESTION';
-const ANSWER = 'ANSWER';
-const RESULT = 'RESULT';
-
-const defaultState = {
-  view: QUESTION,
-  index: 0
-};
+const noop = () => null;
 
 class Quiz extends Component {
   static navigationOptions = ({ navigation }) => {
-    const { params = {} } = navigation.state;
-    let headerRight = <Button title="Restart" color={yellow} onPress={params.restart ? params.restart : () => null} />;
+    const params = get(navigation, 'state.params', {});
+    let headerRight = <Button title="Restart" color={yellow} onPress={params.restart ? params.restart : noop} />;
 
     if (params.isSaving) {
       headerRight = <ActivityIndicator />;
@@ -30,8 +23,6 @@ class Quiz extends Component {
 
     return { headerRight };
   };
-
-  state = { ...defaultState };
 
   componentDidMount() {
     this.props.navigation.setParams({ restart: this.restart });
@@ -42,71 +33,59 @@ class Quiz extends Component {
   }
 
   restart = () => {
-    // confirm restart quiz?
+    // If the user is on the result view, we don't need to confirm
+    if (this.props.view === RESULT) {
+      return this.props.resetQuiz();
+    }
 
-    this.setState({ ...defaultState });
+    return Alert.alert(
+      'Restart Quiz',
+      'Are you sure you want to start from scratch?',
+      [{ text: 'Cancel', style: 'cancel' }, { text: 'OK', onPress: () => this.props.resetQuiz() }],
+      { cancelable: false }
+    );
   };
 
-  next = () => {
-    this.setState(({ index }) => {
-      const isDone = index + 1 === this.props.questions.length;
-
-      return {
-        index: isDone ? index : index + 1,
-        view: isDone ? RESULT : QUESTION
-      };
-    });
-  };
-
-  correct = () => {
-    this.props.answeredQuestion(this.state.index);
-    this.next();
-  };
-
-  incorrect = () => {
-    this.props.answeredQuestion();
-    this.next();
-  };
-
-  showAnswer = () => {
-    this.setState({ view: ANSWER });
-  };
-
-  currentBody = () => {
-    const { view, index } = this.state;
+  renderCurrentBody = () => {
+    const { currentQuestionIndex, view, questions: { length } } = this.props;
 
     switch (view) {
       case RESULT: {
-        const { questions: { length }, correctCount } = this.props;
-        return <QuizResult correctCount={correctCount} totalCount={length} onRestart={this.restart} />;
+        const { correct } = this.props;
+        return <QuizResult correct={correct} total={length} onRestart={this.restart} />;
       }
 
       case ANSWER:
         return (
           <QuizAnswer
-            answer={get(this.props, `questions[${index}].answer`, '')}
-            onCorrect={this.correct}
-            onIncorrect={this.incorrect}
+            answer={get(this.props, `questions[${currentQuestionIndex}].answer`, '')}
+            onCorrect={() => this.props.answeredQuestion({ index: currentQuestionIndex, total: length })}
+            onIncorrect={() => this.props.answeredQuestion({ total: length })}
           />
         );
 
       case QUESTION:
       default:
         return (
-          <QuizQuestion question={get(this.props, `questions[${index}].question`, '')} showAnswer={this.showAnswer} />
+          <QuizQuestion
+            question={get(this.props, `questions[${currentQuestionIndex}].question`, '')}
+            showAnswer={this.props.showAnswer}
+          />
         );
     }
   };
 
   render() {
-    const { title, questions, answeredCount } = this.props;
+    const { questions, answered } = this.props;
+    const totalQuestions = questions.length;
+    const questionNumber = answered === totalQuestions ? answered : answered + 1;
+
     return (
       <CenteredContainer style={{ backgroundColor: black75 }}>
-        <Text>{title}</Text>
-        <Text>
-          {answeredCount} of {questions.length}
-        </Text>
-        <CenteredContainer>{this.currentBody()}</CenteredContainer>
+        <CenteredContainer>{this.renderCurrentBody()}</CenteredContainer>
+        <QuestionCount>
+          {questionNumber} of {totalQuestions}
+        </QuestionCount>
       </CenteredContainer>
     );
   }
@@ -116,22 +95,25 @@ Quiz.defaultProps = {};
 
 Quiz.propTypes = {
   navigation: PropTypes.object.isRequired,
-  title: PropTypes.string.isRequired,
+  view: PropTypes.string.isRequired,
+  currentQuestionIndex: PropTypes.number.isRequired,
   questions: PropTypes.array.isRequired,
-  correctCount: PropTypes.number.isRequired,
-  answeredCount: PropTypes.number.isRequired,
+  correct: PropTypes.array.isRequired,
+  answered: PropTypes.number.isRequired,
   resetQuiz: PropTypes.func.isRequired,
+  showAnswer: PropTypes.func.isRequired,
   answeredQuestion: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ decks, quiz }, { navigation }) => {
-  const title = get(navigation, 'state.params.title', '');
-  return { ...decks[title], ...quiz };
+  const deck = get(navigation, 'state.params.title', '');
+  return { ...decks[deck], ...quiz };
 };
 
 const mapDispatchToProps = dispatch => ({
   resetQuiz: () => dispatch(resetQuiz()),
-  answeredQuestion: () => dispatch(answeredQuestion())
+  showAnswer: () => dispatch(showAnswer()),
+  answeredQuestion: payload => dispatch(answeredQuestion(payload))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Quiz);
