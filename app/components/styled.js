@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { white, black, gray, red, black75 } from '../helpers/colors';
+import { white, black, gray, red, black75, yellow } from '../helpers/colors';
 
 export const CenteredContainer = styled.View`
   flex: 1;
@@ -67,24 +67,31 @@ export const ButtonText = styled.Text`
 
 export const Input = styled.TextInput`
   font-size: 16px;
-  color: ${black};
+  color: ${yellow};
   width: 100%;
   margin: 15px;
   padding: 10px;
   border-bottom-width: 1;
-  border-color: ${black}
-  text-align: center;
+  border-color: ${white};
 `;
 
 export const Label = styled.Text`
   font-size: ${props => (props.big ? '26px' : '16px')};
-  color: ${black};
+  color: ${white};
   margin: 30px 15px 15px;
   text-align: center;
 `;
 
-export const QuestionCount = styled.Text`
+export const FootNote = styled.Text`
   font-size: 14px;
   padding: 8px;
   color: ${white};
+  text-align: center;
+`;
+
+export const Instructions = styled.Text`
+  margin: 30px;
+  color: ${white};
+  font-size: 18px;
+  text-align: center;
 `;

@@ -6,7 +6,7 @@ import get from 'lodash.get';
 import QuizQuestion from './QuizQuestion';
 import QuizAnswer from './QuizAnswer';
 import QuizResult from './QuizResult';
-import { CenteredContainer, QuestionCount } from './styled';
+import { CenteredContainer, FootNote } from './styled';
 import { black75, yellow } from '../helpers/colors';
 import { resetQuiz, answeredQuestion, showAnswer, QUESTION, ANSWER, RESULT } from '../actions';
 
@@ -83,9 +83,9 @@ class Quiz extends Component {
     return (
       <CenteredContainer style={{ backgroundColor: black75 }}>
         <CenteredContainer>{this.renderCurrentBody()}</CenteredContainer>
-        <QuestionCount>
+        <FootNote>
           {questionNumber} of {totalQuestions}
-        </QuestionCount>
+        </FootNote>
       </CenteredContainer>
     );
   }

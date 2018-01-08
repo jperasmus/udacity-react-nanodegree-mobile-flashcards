@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { ActivityIndicator, Button } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { CenteredContainer, Input, Label } from './styled';
-import { white, yellow } from '../helpers/colors';
+import { CenteredContainer, Input, Instructions } from './styled';
+import { yellow, black75 } from '../helpers/colors';
 import { addDeck } from '../actions';
 
 export const AddDeckTabBarIcon = ({ tintColor, focused }) => (
@@ -76,17 +76,19 @@ class AddDeck extends Component {
     const { title, description } = this.state;
 
     return (
-      <KeyboardAwareScrollView style={{ backgroundColor: white }}>
+      <KeyboardAwareScrollView style={{ backgroundColor: black75 }}>
+        <Instructions>Name your new deck and optionally give it a description</Instructions>
         <CenteredContainer>
-          <Label big>What do you want to call your new deck?</Label>
           <Input
             allowFontScaling
             maxLength={25}
             keyboardAppearance="dark"
+            selectionColor={yellow}
+            placeholderTextColor={yellow}
+            placeholder="Name"
             onChangeText={this.fieldChange('title')}
             value={title}
           />
-          <Label>Optionally describe your new deck</Label>
           <Input
             allowFontScaling
             autoGrow
@@ -95,6 +97,9 @@ class AddDeck extends Component {
             numberOfLines={3}
             maxHeight={80}
             keyboardAppearance="dark"
+            selectionColor={yellow}
+            placeholderTextColor={yellow}
+            placeholder="Description"
             onChangeText={this.fieldChange('description')}
             value={description}
           />

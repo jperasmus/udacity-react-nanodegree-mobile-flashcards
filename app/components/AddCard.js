@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { ActivityIndicator, Button } from 'react-native';
+import { ActivityIndicator, Button, Text } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import get from 'lodash.get';
 import { CenteredContainer, Input, Label } from './styled';
-import { white, yellow } from '../helpers/colors';
+import { white, yellow, black75 } from '../helpers/colors';
 import { addCard } from '../actions';
 
 const defaultState = {
@@ -57,23 +57,30 @@ class AddCard extends Component {
     const { question, answer } = this.state;
 
     return (
-      <KeyboardAwareScrollView style={{ backgroundColor: white }}>
+      <KeyboardAwareScrollView style={{ backgroundColor: black75 }}>
+        <Text style={{ margin: 30, color: white, fontSize: 18, textAlign: 'center' }}>
+          Add the question and corresponding answer for this card
+        </Text>
         <CenteredContainer>
-          <Label big>Question</Label>
           <Input
             allowFontScaling
             maxLength={140}
             keyboardAppearance="dark"
             returnKeyType="next"
+            selectionColor={yellow}
+            placeholderTextColor={yellow}
+            placeholder="Question"
             onChangeText={this.fieldChange('question')}
             value={question}
           />
-          <Label big>Answer</Label>
           <Input
             allowFontScaling
             maxLength={140}
             keyboardAppearance="dark"
             returnKeyType="done"
+            selectionColor={yellow}
+            placeholderTextColor={yellow}
+            placeholder="Answer"
             onChangeText={this.fieldChange('answer')}
             value={answer}
           />
