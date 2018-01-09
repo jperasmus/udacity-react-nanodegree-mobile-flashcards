@@ -35,6 +35,7 @@ export const Header = styled.Text`
   color: ${white};
   margin-top: 30px;
   margin-bottom: 15px;
+  text-align: center;
 `;
 
 export const Paragraph = styled.Text`

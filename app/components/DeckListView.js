@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Text, FlatList, View } from 'react-native';
+import { Text, View, Animated } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { LargeList } from 'react-native-largelist';
 import DeckListItem from './DeckListItem';
 import { CenteredContainer } from './styled';
 import isEmpty from '../helpers/is-empty';
@@ -20,14 +21,55 @@ DeckListViewTabBarIcon.propTypes = {
 };
 
 class DeckListView extends Component {
+  state = {
+    refreshing: false,
+    viewAnimation: new Animated.Value(0)
+  };
+
   componentDidMount() {
     this.props.getDecks();
+
+    Animated.timing(this.state.viewAnimation, {
+      toValue: 1,
+      duration: 1000
+    }).start();
   }
 
-  keyExtractor = item => item.title;
+  refresh = () => {
+    const afterFadeOut = async () => {
+      await this.props.getDecks();
+      // Spoofing a 400ms timeout here before stopping the refresh setting, so that it is at least
+      // apparent to the user that the list is refreshed
+      // If this was actually making a request to a remote server, it would be a bit more realistic
+      setTimeout(
+        () =>
+          this.setState({ refreshing: false }, () => {
+            Animated.timing(this.state.viewAnimation, {
+              toValue: 1,
+              duration: 200
+            }).start();
+          }),
+        400
+      );
+    };
+
+    const whileRefreshing = () => {
+      Animated.timing(this.state.viewAnimation, {
+        toValue: 0.85,
+        duration: 200
+      }).start(afterFadeOut);
+    };
+
+    this.setState({ refreshing: true }, whileRefreshing);
+  };
 
   navigateToDeck = title => {
     this.props.navigation.navigate('Single', { title });
+  };
+
+  renderItem = (section, index) => {
+    const item = this.data[index];
+    return <DeckListItem key={item.title} onPress={this.navigateToDeck} item={item} />;
   };
 
   render() {
@@ -42,16 +84,23 @@ class DeckListView extends Component {
       );
     }
 
-    const data = sortByAttr('title', Object.values(decks));
+    this.data = sortByAttr('title', Object.values(decks));
 
     return (
-      <View style={{ backgroundColor: white, flex: 1 }}>
-        <FlatList
-          data={data}
-          renderItem={item => <DeckListItem onPress={this.navigateToDeck} {...item} />}
-          keyExtractor={this.keyExtractor}
+      <Animated.View
+        style={{ backgroundColor: white, flex: 1, opacity: this.state.viewAnimation }}
+        key={this.data.length}
+      >
+        <LargeList
+          style={{ flex: 1 }}
+          bounces
+          refreshing={this.state.refreshing}
+          onRefresh={this.refresh}
+          renderCell={this.renderItem}
+          numberOfRowsInSection={() => this.data.length}
+          heightForCell={() => 70}
         />
-      </View>
+      </Animated.View>
     );
   }
 }

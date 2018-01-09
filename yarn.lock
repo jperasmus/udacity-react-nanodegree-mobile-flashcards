@@ -5751,6 +5751,12 @@ react-native-keyboard-aware-scroll-view@^0.4.1:
     prop-types "^15.6.0"
     react-native-iphone-x-helper "^1.0.1"
 
+react-native-largelist@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/react-native-largelist/-/react-native-largelist-1.2.2.tgz#12dffa8a2f64ad018247dd888fd261dbb215cbfd"
+  dependencies:
+    prop-types "^15.6.0"
+
 react-native-maps@0.17.1:
   version "0.17.1"
   resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.17.1.tgz#ab2236341fd984dac8864202ae55331bc262f60c"

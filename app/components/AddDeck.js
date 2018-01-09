@@ -53,7 +53,6 @@ class AddDeck extends Component {
 
   clear = () => {
     this.props.navigation.setParams({ isClearing: true });
-
     this.setState({ ...defaultState }, () => this.props.navigation.setParams({ isClearing: false }));
   };
 
