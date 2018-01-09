@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { white, black, gray, red, black75, black25, yellow } from '../helpers/colors';
+import { white, black, gray, red, black75, black25, yellow, orange } from '../helpers/colors';
 
 export const CenteredContainer = styled.View`
   flex: 1;
@@ -21,13 +21,13 @@ export const ListItem = styled.TouchableOpacity`
 `;
 
 export const ListItemTitle = styled.Text`
-  font-size: 20px;
+  font-size: 19px;
   color: ${white};
 `;
 
 export const ListItemInfo = styled.Text`
   font-size: 14px;
-  color: ${white};
+  color: ${orange};
 `;
 
 export const Header = styled.Text`
