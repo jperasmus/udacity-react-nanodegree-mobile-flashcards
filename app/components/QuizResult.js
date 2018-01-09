@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { CenteredContainer, Header, Paragraph } from './styled';
 import Button from './Button';
+import { clearLocalNotifications, setLocalNotification } from '../utils/notifications';
 
 const GRADE_MAP = {
   FF: 'Failed so hard 👎👎',
@@ -15,6 +16,14 @@ const GRADE_MAP = {
 };
 
 class QuizResult extends Component {
+  componentDidMount() {
+    // When a user reaches the result view, we can reset the local notification
+    // Chose not to ask for notifications when the app loads the first time because
+    // I personally find that annoying. Rather do it here at a strategic place where
+    // the user *hopefully* found some use/joy out of the app
+    clearLocalNotifications().then(setLocalNotification);
+  }
+
   getGradeSymbol = grade => {
     if (grade === 100) {
       return 'A+';
