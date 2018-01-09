@@ -65,9 +65,10 @@ class AddDeck extends Component {
     navigation.setParams({ isSaving: true });
 
     saveDeck(this.state).then(() => {
+      const { title } = this.state;
       this.setState({ ...defaultState }, () => {
         navigation.setParams({ isSaving: false });
-        navigation.navigate('Decks');
+        navigation.navigate('Single', { title });
       });
     });
   };
