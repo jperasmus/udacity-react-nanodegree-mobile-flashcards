@@ -1,4 +1,5 @@
-import { RESET_QUIZ, ANSWERED_QUESTION, SHOW_ANSWER, QUESTION, ANSWER, RESULT } from '../actions';
+import { RESET_QUIZ, ANSWERED_QUESTION, SHOW_ANSWER } from '../actions';
+import { QUESTION, ANSWER, RESULT } from '../utils/constants';
 
 const initialState = {
   view: QUESTION,

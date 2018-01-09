@@ -2,8 +2,7 @@
 import { AsyncStorage } from 'react-native';
 import compose from 'compose-then';
 import whereNotEmpty from '../helpers/where-not-empty';
-
-const DECKS_STORAGE_KEY = 'FLASHCARDS';
+import { DECKS_STORAGE_KEY, DECK_ALREADY_EXIST } from './constants';
 
 export const getDecks = async () => {
   const getAndPrepDecks = compose(whereNotEmpty, JSON.parse, AsyncStorage.getItem);
@@ -19,7 +18,7 @@ export const saveDeckTitle = async deck => {
   const deckExist = await getDeck(deck.title);
 
   if (deckExist) {
-    throw new Error('DECK_ALREADY_EXIST');
+    throw new Error(DECK_ALREADY_EXIST);
   }
 
   await AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify({ [deck.title]: deck }));

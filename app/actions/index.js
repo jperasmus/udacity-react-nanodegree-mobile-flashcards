@@ -48,9 +48,6 @@ export const addCard = payload => async dispatch => {
 export const RESET_QUIZ = 'RESET_QUIZ';
 export const SHOW_ANSWER = 'SHOW_ANSWER';
 export const ANSWERED_QUESTION = 'ANSWERED_QUESTION';
-export const QUESTION = 'QUESTION';
-export const ANSWER = 'ANSWER';
-export const RESULT = 'RESULT';
 
 export const resetQuiz = () => ({
   type: RESET_QUIZ

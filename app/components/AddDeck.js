@@ -7,6 +7,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { CenteredContainer, Input, Instructions } from './styled';
 import { yellow, black75 } from '../helpers/colors';
 import { addDeck } from '../actions';
+import { DECK_ALREADY_EXIST } from '../utils/constants';
 
 export const AddDeckTabBarIcon = ({ tintColor, focused }) => (
   <Ionicons name={focused ? 'ios-add-circle' : 'ios-add-circle-outline'} size={26} style={{ color: tintColor }} />
@@ -75,7 +76,7 @@ class AddDeck extends Component {
       })
       .catch(error => {
         const errorMessage =
-          error.message === 'DECK_ALREADY_EXIST'
+          error.message === DECK_ALREADY_EXIST
             ? 'Looks like there is already a deck with that name'
             : 'An unexpected error occurred';
 

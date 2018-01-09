@@ -8,7 +8,8 @@ import QuizAnswer from './QuizAnswer';
 import QuizResult from './QuizResult';
 import { CenteredContainer, FootNote } from './styled';
 import { black75, yellow } from '../helpers/colors';
-import { resetQuiz, answeredQuestion, showAnswer, QUESTION, ANSWER, RESULT } from '../actions';
+import { resetQuiz, answeredQuestion, showAnswer } from '../actions';
+import { RESULT, ANSWER, QUESTION } from '../utils/constants';
 
 const noop = () => null;
 

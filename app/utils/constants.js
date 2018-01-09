@@ -1,0 +1,6 @@
+export const DECKS_STORAGE_KEY = 'FLASHCARDS:DECKS';
+export const NOTIFICATIONS_KEY = 'FLASHCARDS:NOTIFICATIONS';
+export const DECK_ALREADY_EXIST = 'DECK_ALREADY_EXIST';
+export const QUESTION = 'QUESTION';
+export const ANSWER = 'ANSWER';
+export const RESULT = 'RESULT';
