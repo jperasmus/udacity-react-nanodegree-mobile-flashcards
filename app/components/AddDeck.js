@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { ActivityIndicator, Button } from 'react-native';
+import { ActivityIndicator, Button, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { CenteredContainer, Input, Instructions } from './styled';
@@ -64,13 +64,24 @@ class AddDeck extends Component {
 
     navigation.setParams({ isSaving: true });
 
-    saveDeck(this.state).then(() => {
-      const { title } = this.state;
-      this.setState({ ...defaultState }, () => {
-        navigation.setParams({ isSaving: false });
-        navigation.navigate('Single', { title });
+    saveDeck(this.state)
+      .then(() => {
+        const { title } = this.state;
+        this.setState({ ...defaultState }, () => {
+          navigation.setParams({ isSaving: false });
+          navigation.navigate('Single', { title });
+        });
+      })
+      .catch(error => {
+        const errorMessage =
+          error.message === 'DECK_ALREADY_EXIST'
+            ? 'Looks like there is already a deck with that name'
+            : 'An unexpected error occurred';
+
+        Alert.alert('Whoops!', errorMessage, [{ text: 'OK' }], {
+          cancelable: false
+        });
       });
-    });
   };
 
   render() {

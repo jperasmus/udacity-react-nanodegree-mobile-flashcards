@@ -5,11 +5,6 @@ import whereNotEmpty from '../helpers/where-not-empty';
 
 const DECKS_STORAGE_KEY = 'FLASHCARDS';
 
-export const saveDeckTitle = async deck => {
-  await AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify({ [deck.title]: deck }));
-  return deck;
-};
-
 export const getDecks = async () => {
   const getAndPrepDecks = compose(whereNotEmpty, JSON.parse, AsyncStorage.getItem);
   return getAndPrepDecks(DECKS_STORAGE_KEY);
@@ -18,6 +13,17 @@ export const getDecks = async () => {
 export const getDeck = async id => {
   const decks = await getDecks();
   return decks[id];
+};
+
+export const saveDeckTitle = async deck => {
+  const deckExist = await getDeck(deck.title);
+
+  if (deckExist) {
+    throw new Error('DECK_ALREADY_EXIST');
+  }
+
+  await AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify({ [deck.title]: deck }));
+  return deck;
 };
 
 export const addCardToDeck = async ({ title, card }) => {
