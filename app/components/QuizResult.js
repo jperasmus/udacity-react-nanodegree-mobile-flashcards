@@ -3,9 +3,47 @@ import PropTypes from 'prop-types';
 import { CenteredContainer, Header, Paragraph } from './styled';
 import Button from './Button';
 
+const GRADE_MAP = {
+  FF: 'Failed so hard 👎👎',
+  F: 'Failed hard 👎',
+  E: 'Less games, more study 🙈',
+  D: "Maybe you studied, maybe you didn't 🤷‍♀️",
+  C: 'Nice one, keep learning 👍',
+  B: 'Well done! You know enough to be dangerous! 🔥',
+  A: 'You are too smart 🏆',
+  'A+': 'Slow down, Einstein! 👻'
+};
+
 class QuizResult extends Component {
+  getGradeSymbol = grade => {
+    if (grade === 100) {
+      return 'A+';
+    }
+    if (grade >= 80) {
+      return 'A';
+    }
+    if (grade >= 70) {
+      return 'B';
+    }
+    if (grade >= 60) {
+      return 'C';
+    }
+    if (grade >= 50) {
+      return 'D';
+    }
+    if (grade >= 40) {
+      return 'E';
+    }
+    if (grade >= 30) {
+      return 'F';
+    }
+    return 'FF';
+  };
+
   render() {
     const { total, correct, onRestart } = this.props;
+    const grade = correct.length / total * 100;
+    const gradeSymbol = this.getGradeSymbol(grade);
 
     return (
       <CenteredContainer>
@@ -13,6 +51,8 @@ class QuizResult extends Component {
         <Paragraph>
           You had {correct.length} correct out of {total}
         </Paragraph>
+        <Paragraph huge>{gradeSymbol}</Paragraph>
+        <Paragraph boxed>{GRADE_MAP[gradeSymbol]}</Paragraph>
         <CenteredContainer>
           <Button title="Restart" isPrimary onPress={onRestart} />
         </CenteredContainer>

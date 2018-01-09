@@ -10,10 +10,11 @@ class QuizAnswer extends Component {
     return (
       <CenteredContainer>
         <Header>Answer</Header>
-        <Paragraph>{answer}</Paragraph>
+        <Paragraph boxed>{answer}</Paragraph>
         <CenteredContainer>
+          <Paragraph>Did you get it right?</Paragraph>
           <Button title="Nope" onPress={onIncorrect} />
-          <Button title="Yay!!" isPrimary onPress={onCorrect} />
+          <Button title="Yes!!" isPrimary onPress={onCorrect} />
         </CenteredContainer>
       </CenteredContainer>
     );

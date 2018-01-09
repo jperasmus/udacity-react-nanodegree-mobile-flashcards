@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { white, black, gray, red, black75, yellow } from '../helpers/colors';
+import { white, black, gray, red, black75, black25, yellow } from '../helpers/colors';
 
 export const CenteredContainer = styled.View`
   flex: 1;
@@ -38,10 +38,12 @@ export const Header = styled.Text`
 `;
 
 export const Paragraph = styled.Text`
-  font-size: 16px;
+  font-size: ${props => (props.huge ? '120px' : '16px')};
   color: ${white};
   margin-bottom: 15px;
   text-align: center;
+  background-color: ${props => (props.boxed ? black25 : 'transparent')};
+  padding: ${props => (props.boxed ? '10px' : '0')};
 `;
 
 export const DeckInfo = styled.Text`

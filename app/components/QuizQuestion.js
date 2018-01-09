@@ -11,7 +11,7 @@ class QuizQuestion extends Component {
     return (
       <CenteredContainer>
         <Header>Question</Header>
-        <Paragraph>{question}</Paragraph>
+        <Paragraph boxed>{question}</Paragraph>
         <CenteredContainer>
           <Button title="Show Answer" isPrimary onPress={showAnswer} />
         </CenteredContainer>
