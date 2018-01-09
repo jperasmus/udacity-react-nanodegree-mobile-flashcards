@@ -21,12 +21,13 @@ const defaultState = {
   title: '',
   description: ''
 };
+const noop = () => null;
 
 class AddDeck extends Component {
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
-    let headerLeft = <Button title="Clear" color={yellow} onPress={params.clear ? params.clear : () => null} />;
-    let headerRight = <Button title="Save" color={yellow} onPress={params.submit ? params.submit : () => null} />;
+    let headerLeft = <Button title="Clear" color={yellow} onPress={params.clear ? params.clear : noop} />;
+    let headerRight = <Button title="Save" color={yellow} onPress={params.submit ? params.submit : noop} />;
 
     if (params.isClearing) {
       headerLeft = <ActivityIndicator />;
@@ -81,6 +82,7 @@ class AddDeck extends Component {
         Alert.alert('Whoops!', errorMessage, [{ text: 'OK' }], {
           cancelable: false
         });
+        navigation.setParams({ isSaving: false });
       });
   };
 

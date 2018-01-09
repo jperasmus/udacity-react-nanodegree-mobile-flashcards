@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { ActivityIndicator, Button, Text } from 'react-native';
+import { ActivityIndicator, Button, Text, Alert } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import get from 'lodash.get';
-import { CenteredContainer, Input, Label } from './styled';
+import { CenteredContainer, Input } from './styled';
 import { white, yellow, black75 } from '../helpers/colors';
 import { addCard } from '../actions';
 
@@ -13,10 +13,12 @@ const defaultState = {
   answer: ''
 };
 
+const noop = () => null;
+
 class AddCard extends Component {
   static navigationOptions = ({ navigation }) => {
     const params = get(navigation, 'state.params', {});
-    let headerRight = <Button title="Save" color={yellow} onPress={params.submit ? params.submit : () => null} />;
+    let headerRight = <Button title="Save" color={yellow} onPress={params.submit ? params.submit : noop} />;
 
     if (params.isSaving) {
       headerRight = <ActivityIndicator />;
@@ -45,12 +47,19 @@ class AddCard extends Component {
 
     navigation.setParams({ isSaving: true });
 
-    saveCard(this.state).then(() => {
-      this.setState({ ...defaultState }, () => {
+    saveCard(this.state)
+      .then(() => {
+        this.setState({ ...defaultState }, () => {
+          navigation.setParams({ isSaving: false });
+          navigation.goBack();
+        });
+      })
+      .catch(error => {
+        Alert.alert('Whoops!', error.message, [{ text: 'OK' }], {
+          cancelable: false
+        });
         navigation.setParams({ isSaving: false });
-        navigation.goBack();
       });
-    });
   };
 
   render() {
