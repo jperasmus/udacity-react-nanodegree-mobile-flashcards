@@ -108,9 +108,6 @@ class AddDeck extends Component {
             allowFontScaling
             autoGrow
             maxLength={140}
-            multiline
-            numberOfLines={3}
-            maxHeight={80}
             keyboardAppearance="dark"
             selectionColor={yellow}
             placeholderTextColor={yellow}

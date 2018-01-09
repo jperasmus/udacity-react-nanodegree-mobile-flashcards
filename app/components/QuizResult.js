@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Animated } from 'react-native';
 import { CenteredContainer, Header, Paragraph } from './styled';
 import Button from './Button';
 import { clearLocalNotifications, setLocalNotification } from '../utils/notifications';
@@ -16,7 +17,25 @@ const GRADE_MAP = {
 };
 
 class QuizResult extends Component {
+  state = {
+    viewAnimation: new Animated.Value(0),
+    symbolAnimation: new Animated.Value(0)
+  };
+
   componentDidMount() {
+    const { viewAnimation, symbolAnimation } = this.state;
+
+    Animated.sequence([
+      Animated.timing(viewAnimation, {
+        toValue: 1,
+        duration: 300
+      }),
+      Animated.spring(symbolAnimation, {
+        toValue: 1,
+        duration: 200
+      })
+    ]).start();
+
     // When a user reaches the result view, we can reset the local notification
     // Chose not to ask for notifications when the app loads the first time because
     // I personally find that annoying. Rather do it here at a strategic place where
@@ -50,22 +69,27 @@ class QuizResult extends Component {
   };
 
   render() {
+    const { viewAnimation, symbolAnimation } = this.state;
     const { total, correct, onRestart } = this.props;
     const grade = correct.length / total * 100;
     const gradeSymbol = this.getGradeSymbol(grade);
 
     return (
-      <CenteredContainer>
-        <Header>Results</Header>
-        <Paragraph>
-          You had {correct.length} correct out of {total}
-        </Paragraph>
-        <Paragraph huge>{gradeSymbol}</Paragraph>
-        <Paragraph boxed>{GRADE_MAP[gradeSymbol]}</Paragraph>
+      <Animated.View style={{ opacity: viewAnimation }}>
         <CenteredContainer>
-          <Button title="Restart" isPrimary onPress={onRestart} />
+          <Header>Results</Header>
+          <Paragraph>
+            You had {correct.length} correct out of {total}
+          </Paragraph>
+          <Animated.View style={{ transform: [{ scale: symbolAnimation }] }}>
+            <Paragraph huge>{gradeSymbol}</Paragraph>
+          </Animated.View>
+          <Paragraph boxed>{GRADE_MAP[gradeSymbol]}</Paragraph>
+          <CenteredContainer>
+            <Button title="Restart" isPrimary onPress={onRestart} />
+          </CenteredContainer>
         </CenteredContainer>
-      </CenteredContainer>
+      </Animated.View>
     );
   }
 }

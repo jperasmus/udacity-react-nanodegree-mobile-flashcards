@@ -95,5 +95,6 @@ export const Instructions = styled.Text`
   margin: 30px;
   color: ${white};
   font-size: 18px;
+  line-height: 24px;
   text-align: center;
 `;

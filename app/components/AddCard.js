@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { ActivityIndicator, Button, Text, Alert } from 'react-native';
+import { ActivityIndicator, Button, Alert } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import get from 'lodash.get';
-import { CenteredContainer, Input } from './styled';
-import { white, yellow, black75 } from '../helpers/colors';
+import { CenteredContainer, Input, Instructions } from './styled';
+import { yellow, black75 } from '../helpers/colors';
 import { addCard } from '../actions';
 
 const defaultState = {
@@ -67,9 +67,7 @@ class AddCard extends Component {
 
     return (
       <KeyboardAwareScrollView style={{ backgroundColor: black75 }}>
-        <Text style={{ margin: 30, color: white, fontSize: 18, textAlign: 'center' }}>
-          Add the question and corresponding answer for this card
-        </Text>
+        <Instructions>Add the question and corresponding answer for this card</Instructions>
         <CenteredContainer>
           <Input
             allowFontScaling
